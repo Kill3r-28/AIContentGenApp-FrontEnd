@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/AIContentGenApp-FrontEnd/static/css/main.cca708b4.css",
+    "main.js": "/AIContentGenApp-FrontEnd/static/js/main.9ddeec8d.js",
+    "index.html": "/AIContentGenApp-FrontEnd/index.html",
+    "main.cca708b4.css.map": "/AIContentGenApp-FrontEnd/static/css/main.cca708b4.css.map",
+    "main.9ddeec8d.js.map": "/AIContentGenApp-FrontEnd/static/js/main.9ddeec8d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cca708b4.css",
+    "static/js/main.9ddeec8d.js"
+  ]
+}
