@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { authFetch } from "../../utils/authFetch";
 import { useAuthGuard } from "../../utils/useAuthGuard";
 import Navbar from "../Navbar/navbar";
@@ -159,15 +158,9 @@ const CodeAnalysis = () => {
         return updated;
     };
 
-    const handleLogout = () => {
-        Cookies.remove("accessToken");
-        Cookies.remove("refreshToken");
-        navigate("/login");
-    };
-
     return (
         <div>
-            <Navbar handleLogout={handleLogout} />
+            <Navbar/>
             <div className="containerCA">
                 <fieldset className="codeAnalysis">
                     <legend className="codeAnalysisLegand">Code Analysis Question</legend>

@@ -1,6 +1,6 @@
 /* General Container */
 .container {
-  max-width: 1100px;
+  max-width: 100%;
   margin: 20px auto;
   padding: 0 16px;
   display: flex;
@@ -10,23 +10,29 @@
   color: #111827;
 }
 
-/* Input and Output Containers */
+
 .input-container{
-  height: 100%;
-}
-
-
-.input-container,
-.output-container {
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
   padding: 20px;
-  flex: 1 1 48%;
-  min-width: 320px;
-  max-height: 600px;
+  width: 70%;
+  max-height: 700px;
   overflow-y: auto;
 }
+
+
+.output-container {
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+  padding: 20px;
+  width: 70%;
+  max-height: 600px;
+  overflow-y: auto;
+  position: relative;
+}
+
 
 /* Sections inside containers */
 .json-upload-section,
@@ -158,17 +164,25 @@
 .error-message {
   color: #dc2626;
   font-weight: 600;
-  margin-top: 8px;
+  margin-top: 25px;
+}
+
+.api-error-message{
+  color: #dc2626;
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 /* Questions editor container */
 .questions-editor {
   max-width: 900px;
-  margin: 30px auto 40px;
+  margin: 50px auto 100px;
   padding: 24px 32px;
   border: 1px solid #d1d5db;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.05);
 }
 
@@ -340,3 +354,4 @@
   justify-content: center;
   margin-bottom: 25px;
 }
+

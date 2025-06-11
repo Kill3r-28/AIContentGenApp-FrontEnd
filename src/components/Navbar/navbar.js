@@ -1,12 +1,19 @@
 import './navbar.css'; // Link your CSS file here
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 
-const Navbar = ({ handleLogout }) => {
+const Navbar = () => {
     const navigate = useNavigate();
     const handleLogoClick = () => {
-        navigate("/"); // Navigate to the home page or desired route
+        navigate("/");
+    };
+
+    const handleLogout = () => {
+        Cookies.remove("accessToken");
+        Cookies.remove("refreshToken");
+        navigate("/login");
     };
     return (
         <nav className="navbar">

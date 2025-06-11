@@ -22,7 +22,7 @@ const encodeBase64 = (str) => {
     }
 };
 
-const Coding = ({ handleLogout }) => {
+const Coding = () => {
     const navigate = useNavigate();
     const [jsonData, setJsonData] = useState(null);
     const [jsonText, setJsonText] = useState("");
@@ -38,7 +38,7 @@ const Coding = ({ handleLogout }) => {
         if (apiError) {
             const timer = setTimeout(() => {
                 setApiError(null);
-            }, 3000);
+            }, 10000);
             return () => clearTimeout(timer);
         }
     }, [apiError]);
@@ -319,9 +319,10 @@ const Coding = ({ handleLogout }) => {
         });
     };
 
+
     return (
         <>
-            <Navbar handleLogout={handleLogout} />
+            <Navbar />
 
             <div className="container">
                 <div className="input-container">
@@ -361,7 +362,7 @@ const Coding = ({ handleLogout }) => {
                                 {loading ? "Generating..." : "Generate"}
                             </button>
 
-                            {apiError && <p className="api-error">{apiError}</p>}
+                            {apiError && <p className="error-message">{apiError}</p>}
                         </div>
                         {error && <p className="error-message">{error}</p>}
                     </div>

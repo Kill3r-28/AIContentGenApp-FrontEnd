@@ -34,9 +34,8 @@ const HomePage = () => {
 
                                 <button className="item" onClick={() => navigate('../Theoretical')}>Theoretical</button>
                                 <button className="item" onClick={() => navigate('../CodeAnalysis')}>Code Analysis</button>
-                                <button className="item">Theoretical with Code Snippet</button>
-
-
+                                {/*change the class name into item whenever the implementation of the specific route is done so the it won't display any hover text*/}
+                                <button className="item1">Theoretical with Code Snippet</button>
                             </div>
                         </fieldset>
                     </div>
@@ -44,9 +43,9 @@ const HomePage = () => {
                         <fieldset>
                             <legend>Coding Curation</legend>
                             <div className="Items">
-                                <button className="item">Coding</button>
-                                <button className="item">Web Coding</button>
-                                <button className="item">SQL Coding</button>
+                                <button className="item1">Coding</button>
+                                <button className="item1">Web Coding</button>
+                                <button className="item1">SQL Coding</button>
                             </div>
                         </fieldset>
                     </div>
@@ -55,8 +54,8 @@ const HomePage = () => {
                             <legend>Coding Replication</legend>
                             <div className="Items">
                                 <button className="item" onClick={() => navigate('../Coding')}>Coding</button>
-                                <button className="item">Web Coding</button>
-                                <button className="item">SQL Coding</button>
+                                <button className="item1">Web Coding</button>
+                                <button className="item1">SQL Coding</button>
                             </div>
                         </fieldset>
                     </div>

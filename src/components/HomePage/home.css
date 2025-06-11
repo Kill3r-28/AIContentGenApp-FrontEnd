@@ -64,6 +64,31 @@ legend {
   box-shadow: 4px 4px 4px #888888;
 }
 
+.item1 {
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 4px #888888;
+  position: relative;
+}
+
+.item1:hover::after {
+  content: "Under Construction !";
+  position: absolute;
+  top: -30px; 
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: black;
+  background-color: #b5efed;
+  padding: 10px 15px;
+  border-radius: 50px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1), -10px -10px 15px rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  text-align: center;
+}
+
+
 .Items.auto-fit {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
