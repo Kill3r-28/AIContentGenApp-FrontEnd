@@ -17,6 +17,9 @@ const TheoreticalCodeSnippet = () => {
     const [difficulty, setDifficulty] = useState("");
     const [topicTag, setTopicTag] = useState("");
     const [subTopicTag, setSubTopicTag] = useState("SUB_TOPIC_");
+    const [unitTag, setUnitTag] = useState("UNIT_");
+    const [moduleTag, setModuleTag] = useState("MODULE_");
+    const [courseTag, setCourseTag] = useState("COURSE_");
     const [syllabus, setSyllabus] = useState("");
     const [message, setMessage] = useState("");
     const [rawPrompt, setRawPrompt] = useState("");
@@ -30,9 +33,12 @@ const TheoreticalCodeSnippet = () => {
         Java: "",
         C: "",
         Javascript: "theory_cs_mcq_javascript",
-        Sql: "",
-        HTML_CSS: ""
+        Sql: "theory_cs_mcq_sql",
+        HTML_CSS: "",
+        Node_JS:"theory_cs_mcq_node",
+        React_JS:"theory_cs_mcq_react"
     };
+    
 
     // Get difficulty counts for display
     const getDifficultyCounts = () => {
@@ -59,7 +65,7 @@ const TheoreticalCodeSnippet = () => {
             topic &&
             numberOfQuestions &&
             topicTag &&
-            subTopicTag &&
+            subTopicTag && 
             syllabus
         );
     };
@@ -84,7 +90,7 @@ const TheoreticalCodeSnippet = () => {
                         difficulty,
                         question_type: "MCQ",
                         topic: topicTag.toUpperCase(),
-                        subtopic: subTopicTag.toUpperCase(),
+                        subtopic: subTopicTag.toUpperCase(), 
                         number_of_question: numberOfQuestions
                     }),
                 },
@@ -184,6 +190,9 @@ const TheoreticalCodeSnippet = () => {
             "{{difficulty_level}}": overrides.difficulty ?? difficulty,
             "{{topic_tag}}": overrides.topic_tag ?? topicTag,
             "{{sub_topic_tag}}": overrides.subTopicTag ?? subTopicTag,
+            "{{unit_tag}}":overrides.unitTag ?? unitTag,
+            "{{module_tag}}":overrides.moduleTag ?? moduleTag,
+            "{{course_tag}}":overrides.moduleTag ?? courseTag,
             "{{syllabus_details}}": overrides.syllabus ?? syllabus,
         };
 
@@ -209,7 +218,7 @@ const TheoreticalCodeSnippet = () => {
         const headers = [
             "Question", "OptionA", "OptionB", "OptionC", "OptionD", "Answer",
             "explanation", "HTML code", "CSS code", "JS code", "toughness",
-            "topic", "Sub_topic"
+            "topic", "Sub_topic","unit_tag","module_tag","course_tag"
         ];
 
         const csvData = questionsJson.map(qStr => {
@@ -254,7 +263,7 @@ const TheoreticalCodeSnippet = () => {
                 "", // JS code - empty as per requirement
                 questionObj.difficulty_level || "",
                 topicTag || "",
-                subTopicTag || ""
+                subTopicTag || "",unitTag||"",moduleTag||"",courseTag||""
             ];
         });
 
@@ -435,8 +444,11 @@ const TheoreticalCodeSnippet = () => {
                             <option value="Java">Java</option>
                             <option value="C">C</option>
                             <option value="Javascript">Javascript</option>
-                            <option value="Sql">Sql</option>
-                            <option value="HTML_CSS">HTML_CSS</option>
+                            <option value="Sql">SQL</option>
+                            <option value="HTML_CSS">HTML CSS</option>
+                            <option value="Node_JS">NODE JS</option>
+                            <option value="React_JS">React JS</option>
+
                         </select>
 
                         <input
@@ -506,6 +518,9 @@ const TheoreticalCodeSnippet = () => {
                             <option value="TOPIC_PYTHON_MCQ">TOPIC_PYTHON_MCQ</option>
                             <option value="TOPIC_JS_MCQ">TOPIC_JS_MCQ</option>
                             <option value="TOPIC_CPP_MCQ">TOPIC_CPP_MCQ</option>
+                            <option value="TOPIC_NODE_MCQ">TOPIC_NODE_MCQ</option>
+                            <option value="TOPIC_REACT_MCQ">TOPIC_REACT_MCQ</option>
+                            <option value="TOPIC_SQL_MCQ">TOPIC_SQL_MCQ</option>
 
 
                         </select>
@@ -520,7 +535,47 @@ const TheoreticalCodeSnippet = () => {
                                 setSubTopicTag(newValue);
                                 updateMessage(rawPrompt);
                             }}
+                            
                         />
+                        </div>
+                        <h3>Optional tags</h3>
+                        <div className="topin-input">
+                            <input
+                                type="text"
+                                className="caBoxes tag"
+                                placeholder="Enter unit Tag"
+                                value={unitTag}
+                                onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setUnitTag(newValue);
+                                    updateMessage(rawPrompt);
+                                }}
+                                
+                            />
+                            <input
+                                type="text"
+                                className="caBoxes tag"
+                                placeholder="Enter Module Tag"
+                                value={moduleTag}
+                                onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setModuleTag(newValue);
+                                    updateMessage(rawPrompt);
+                                }}
+                                
+                            />
+                            <input
+                                type="text"
+                                className="caBoxes tag"
+                                placeholder="Enter Course Tag"
+                                value={courseTag}
+                                onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setCourseTag(newValue);
+                                    updateMessage(rawPrompt);
+                                }}
+                                
+                            />
                     </div>
 
                     <textarea

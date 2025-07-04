@@ -17,6 +17,9 @@ const Theoretical = () => {
     const [difficulty, setDifficulty] = useState("");
     const [topicTag, setTopicTag] = useState("");
     const [subTopicTag, setSubTopicTag] = useState("SUB_TOPIC_");
+    const [unitTag, setUnitTag] = useState("UNIT_");
+    const [moduleTag, setModuleTag] = useState("MODULE_");
+    const [courseTag, setCourseTag] = useState("COURSE_");
     const [syllabus, setSyllabus] = useState("");
     const [message, setMessage] = useState("");
     const [rawPrompt, setRawPrompt] = useState("");
@@ -30,9 +33,12 @@ const Theoretical = () => {
         Java: "",
         C: "",
         Javascript: "theory_mcq_javascript",
-        Sql: "",
-        HTML_CSS: "theory_mcq_html_css"
+        SQL: "theory_mcq_sql",
+        HTML_CSS: "theory_mcq_html_css",
+        React_JS:"theory_mcq_react",
+        Node_Js:"theory_mcq_node"
     };
+    
 
     // Get difficulty counts for display
     const getDifficultyCounts = () => {
@@ -59,22 +65,12 @@ const Theoretical = () => {
             topic &&
             numberOfQuestions &&
             topicTag &&
-            subTopicTag &&
+            subTopicTag && 
             syllabus
         );
     };
 
-    // Helper function to transform options from object to array
-    const transformOptionsToArray = (questionObj) => {
-        if (questionObj && typeof questionObj.options === 'object' && !Array.isArray(questionObj.options)) {
-            const optionsArray = Object.entries(questionObj.options).map(([text, correct]) => ({
-                text: text,
-                correct: correct
-            }));
-            return { ...questionObj, options: optionsArray };
-        }
-        return questionObj;
-    };
+   
 
     // Request questions from API
     const requestQuestions = async () => {
@@ -94,7 +90,7 @@ const Theoretical = () => {
                         difficulty,
                         question_type: "MCQ",
                         topic: topicTag.toUpperCase(),
-                        subtopic: subTopicTag.toUpperCase(),
+                        subtopic: subTopicTag.toUpperCase(), 
                         number_of_question: numberOfQuestions
                     }),
                 },
@@ -106,10 +102,10 @@ const Theoretical = () => {
             const data = await response.json();
             let message = data.message.trim();
         if (message.startsWith("```json")) {
-            message = message.substring(7); // Remove "```json" from the start
+            message = message.substring(7);
         }
         if (message.endsWith("```")) {
-            message = message.slice(0, -3); // Remove "```" from the end
+            message = message.slice(0, -3);
         }
 
         let parsedQuestions;
@@ -118,6 +114,21 @@ const Theoretical = () => {
         } catch {
             parsedQuestions = [];
         }
+
+            if (!Array.isArray(parsedQuestions)) {
+                parsedQuestions = [];
+            }
+             // Helper function to transform options from object to array
+    const transformOptionsToArray = (questionObj) => {
+        if (questionObj && typeof questionObj.options === 'object' && !Array.isArray(questionObj.options)) {
+            const optionsArray = Object.entries(questionObj.options).map(([text, correct]) => ({
+                text: text,
+                correct: correct
+            }));
+            return { ...questionObj, options: optionsArray };
+        }
+        return questionObj;
+    };
 
             // Transform options to array before stringifying
             const stringifiedQuestions = parsedQuestions.map(q =>
@@ -179,6 +190,9 @@ const Theoretical = () => {
             "{{difficulty_level}}": overrides.difficulty ?? difficulty,
             "{{topic_tag}}": overrides.topic_tag ?? topicTag,
             "{{sub_topic_tag}}": overrides.subTopicTag ?? subTopicTag,
+            "{{unit_tag}}":overrides.unitTag ?? unitTag,
+            "{{module_tag}}":overrides.moduleTag ?? moduleTag,
+            "{{course_tag}}":overrides.moduleTag ?? courseTag,
             "{{syllabus_details}}": overrides.syllabus ?? syllabus,
         };
 
@@ -204,7 +218,7 @@ const Theoretical = () => {
         const headers = [
             "Question", "OptionA", "OptionB", "OptionC", "OptionD", "Answer",
             "explanation", "HTML code", "CSS code", "JS code", "toughness",
-            "topic", "Sub_topic"
+            "topic", "Sub_topic","unit_tag","module_tag","course_tag"
         ];
 
         const csvData = questionsJson.map(qStr => {
@@ -249,7 +263,7 @@ const Theoretical = () => {
                 "", // JS code - empty as per requirement
                 questionObj.difficulty_level || "",
                 topicTag || "",
-                subTopicTag || ""
+                subTopicTag || "",unitTag||"",moduleTag||"",courseTag||""
             ];
         });
 
@@ -412,7 +426,7 @@ const Theoretical = () => {
             <Navbar />
             <div className="containerCA">
                 <fieldset className="codeAnalysis">
-                    <legend className="codeAnalysisLegand">Theoretical MCQ Question</legend>
+                    <legend className="codeAnalysisLegand">Theoretical Question</legend>
 
                     <div className="details-text-prompt">
                         <h3>----- Details for Prompt -----</h3>
@@ -430,8 +444,11 @@ const Theoretical = () => {
                             <option value="Java">Java</option>
                             <option value="C">C</option>
                             <option value="Javascript">Javascript</option>
-                            <option value="Sql">Sql</option>
-                            <option value="HTML_CSS">HTML_CSS</option>
+                            <option value="SQL">SQL</option>
+                            <option value="HTML_CSS">HTML CSS</option>
+                            <option value="Node_Js">NODE JS</option>
+                            <option value="React_JS">React JS</option>
+
                         </select>
 
                         <input
@@ -499,8 +516,13 @@ const Theoretical = () => {
                             <option value="default">Choose Topic Tag</option>
                             <option value="TOPIC_HTML_CSS_MCQ">TOPIC_HTML_CSS_MCQ</option>
                             <option value="TOPIC_PYTHON_MCQ">TOPIC_PYTHON_MCQ</option>
-                            <option value="TOPIC_CPP_MCQ">TOPIC_CPP_MCQ</option>
                             <option value="TOPIC_JS_MCQ">TOPIC_JS_MCQ</option>
+                            <option value="TOPIC_CPP_MCQ">TOPIC_CPP_MCQ</option>
+                            <option value="TOPIC_NODE_MCQ">TOPIC_NODE_MCQ</option>
+                            <option value="TOPIC_REACT_MCQ">TOPIC_REACT_MCQ</option>
+                            <option value="TOPIC_SQL_MCQ">TOPIC_SQL_MCQ</option>
+
+
                         </select>
 
                         <input
@@ -513,7 +535,47 @@ const Theoretical = () => {
                                 setSubTopicTag(newValue);
                                 updateMessage(rawPrompt);
                             }}
+                            
                         />
+                        </div>
+                        <h3>Optional tags</h3>
+                        <div className="topin-input">
+                            <input
+                                type="text"
+                                className="caBoxes tag"
+                                placeholder="Enter unit Tag"
+                                value={unitTag}
+                                onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setUnitTag(newValue);
+                                    updateMessage(rawPrompt);
+                                }}
+                                
+                            />
+                            <input
+                                type="text"
+                                className="caBoxes tag"
+                                placeholder="Enter Module Tag"
+                                value={moduleTag}
+                                onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setModuleTag(newValue);
+                                    updateMessage(rawPrompt);
+                                }}
+                                
+                            />
+                            <input
+                                type="text"
+                                className="caBoxes tag"
+                                placeholder="Enter Course Tag"
+                                value={courseTag}
+                                onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setCourseTag(newValue);
+                                    updateMessage(rawPrompt);
+                                }}
+                                
+                            />
                     </div>
 
                     <textarea
@@ -567,7 +629,6 @@ const Theoretical = () => {
                             flexWrap: "wrap"
                         }}>
                             <h2 style={{ margin: 0 }}>Edit Generated Questions</h2>
-
                             <div style={{
                                 backgroundColor: "#f1f3f5",
                                 borderRadius: "8px",
