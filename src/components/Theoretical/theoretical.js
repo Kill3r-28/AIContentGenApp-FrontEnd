@@ -25,6 +25,8 @@ const Theoretical = () => {
     const [rawPrompt, setRawPrompt] = useState("");
     const [loading, setLoading] = useState(false);
     const [questionsJson, setQuestionsJson] = useState([]);
+    const [isPromptEdited, setEditPromptStatus] = useState(false);
+    const [processName, setProcessName]= useState("");
 
     // Technology mapping
     const techToProcessName = {
@@ -91,7 +93,9 @@ const Theoretical = () => {
                         question_type: "MCQ",
                         topic: topicTag.toUpperCase(),
                         subtopic: subTopicTag.toUpperCase(), 
-                        number_of_question: numberOfQuestions
+                        number_of_question: numberOfQuestions,
+                        isUpdated: isPromptEdited,
+                        process_name: processName
                     }),
                 },
                 navigate,
@@ -156,6 +160,7 @@ const Theoretical = () => {
         const mappedProcessName = techToProcessName[value];
         console.log("Selected technology:", value);
         console.log("Mapped process name:", mappedProcessName);
+        setProcessName(mappedProcessName);
 
         if (!mappedProcessName) {
             console.error("No mapping found for technology:", value);
@@ -421,6 +426,7 @@ const Theoretical = () => {
         }
     };
 
+
     return (
         <div>
             <Navbar />
@@ -580,9 +586,11 @@ const Theoretical = () => {
                             />
                     </div>
 
+
                     <textarea
                         className="caTextArea"
                         placeholder="Enter Syllabus details"
+                        
                         value={syllabus}
                         onChange={(e) => {
                             const newValue = e.target.value;
@@ -591,9 +599,16 @@ const Theoretical = () => {
                         }}
                     />
 
+                    {isPromptEdited? 
+                    <button className="edit-button" disabled>Edit Prompt</button> : 
+                    <button className="edit-button" onClick={()=>setEditPromptStatus(!isPromptEdited)}>Edit Prompt</button>
+                    }
+                    
+
                     <textarea
                         className="caTextArea"
                         placeholder="Fetched prompt"
+                        disabled={!isPromptEdited}
                         value={message}
                         onChange={(e) => {
                             const newTemplate = e.target.value;

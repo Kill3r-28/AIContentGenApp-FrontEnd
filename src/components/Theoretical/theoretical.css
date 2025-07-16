@@ -41,6 +41,15 @@ fieldset:hover {
 
 }
 
+.edit-button{
+  align-self: flex-end;
+  padding: 7px;
+  background-color: #1565D8;
+  border-radius: 5px;
+  border: none;
+  color: #ffffff;
+}
+
 .itemCA {
    padding: 10px 15px;
   font-size: 1rem;

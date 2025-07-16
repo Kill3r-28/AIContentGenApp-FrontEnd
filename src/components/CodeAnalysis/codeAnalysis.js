@@ -22,6 +22,9 @@ const CodeAnalysis = () => {
     const [rawPrompt, setRawPrompt] = useState("");
     const [loading, setLoading] = useState(false);
     const [questionsJson, setQuestionsJson] = useState([]);
+    const [isPromptEdited, setEditPromptStatus] = useState(false);
+    const [processName, setProcessName]= useState("");
+
 
     const techToProcessName = {
         CPP: "ca_mcq_cpp",
@@ -77,7 +80,9 @@ const CodeAnalysis = () => {
                         question_type: "MCQ",
                         topic: topicTag.toUpperCase(),
                         subtopic: subTopicTag.toUpperCase(),
-                        number_of_question: numberOfQuestions
+                        number_of_question: numberOfQuestions,
+                        isUpdated: isPromptEdited,
+                        process_name: processName
                     }),
                 },
                 navigate,
@@ -141,6 +146,7 @@ const CodeAnalysis = () => {
         setTechnology(value);
 
         const mappedProcessName = techToProcessName[value];
+        setProcessName(mappedProcessName)
         if (!mappedProcessName) return;
 
         const response = await authFetch(
@@ -297,9 +303,15 @@ const CodeAnalysis = () => {
                         }}
                     />
 
+                    {isPromptEdited? 
+                    <button className="edit-button" disabled>Edit Prompt</button> : 
+                    <button className="edit-button" onClick={()=>setEditPromptStatus(!isPromptEdited)}>Edit Prompt</button>
+                    }
+
                     <textarea
                         className="caTextArea"
                         placeholder="Fetched prompt"
+                        disabled={!isPromptEdited}
                         value={message}
                         onChange={(e) => {
                             const newTemplate = e.target.value;
