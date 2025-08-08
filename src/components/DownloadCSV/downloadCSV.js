@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const DownloadCSVButton = ({ questionJSONs, technology, topicTag, subTopicTag, disabled }) => {
+const DownloadCSVButton = ({ questionJSONs, technology, disabled, topicTag }) => {
     const escapeCSV = (value) => {
         if (value === undefined || value === null) return '';
         const stringVal = typeof value === 'string' ? value : JSON.stringify(value);
@@ -42,7 +42,8 @@ const DownloadCSVButton = ({ questionJSONs, technology, topicTag, subTopicTag, d
                 code_data,
                 options,
                 difficulty_level,
-                answer_explanation_content
+                answer_explanation_content,
+                tags
             } = parsed;
 
             const question_id = uuidv4();
@@ -57,17 +58,13 @@ const DownloadCSVButton = ({ questionJSONs, technology, topicTag, subTopicTag, d
             const thumbnail_url = '';
             const tag_names = [
                 'POOL_1',
-                topicTag.toUpperCase(),
-                subTopicTag.toUpperCase(),
                 `DIFFICULTY_${(difficulty_level || '').toUpperCase()}`,
                 'SOURCE_GPT',
                 'IN_OFFLINE_EXAM',
                 'NIAT',
                 'IS_PUBLIC',
                 question_id,
-                'MODULE_name',
-                'UNIT_name',
-                'COURSE_name',
+                ...tags
             ].filter(Boolean).join('\n');
 
             const options_content_type = 'MARKDOWN';
